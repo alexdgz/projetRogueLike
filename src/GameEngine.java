@@ -29,7 +29,7 @@ public class GameEngine extends JPanel implements KeyListener, Runnable {
         fenetre.setVisible(true);
 
 
-        xEnnemi = 1000000000;
+        xEnnemi = 500;
         yEnnemi = 200;
 
         try {
@@ -91,8 +91,14 @@ public class GameEngine extends JPanel implements KeyListener, Runnable {
             } else if (player.getHealth() == 1) {
                 g.drawImage(vie1, 0, 0, null);
             }
+            // Dessine le score
+            g.setColor(Color.WHITE  );
+            g.setFont(new Font("Arial", Font.BOLD, 20));
+            String scoreString = "Score: " + player.getScore();
+            g.drawString(scoreString, getWidth() - g.getFontMetrics().stringWidth(scoreString) - 10, 30);
 
-
+            g.setColor(Color.BLUE);
+            g.fillRect(player.getRectangleEpee().x, player.getRectangleEpee().y, player.getRectangleEpee().width, player.getRectangleEpee().height);
         }else {
             g.drawImage(game_over, 0, 0, null);
         }
@@ -132,6 +138,14 @@ public class GameEngine extends JPanel implements KeyListener, Runnable {
             player.setyPersonnage(player.getyPersonnage() - 20);
         }
 
+        if (player.getRectangleEpee().intersects(rectangleEnnemi)) {
+            xEnnemi = 100;
+            yEnnemi = 200;
+            player.setScore(player.getScore() + 1);
+        }
+
+
+
     }
 
     public void keyPressed(KeyEvent e) {
@@ -140,6 +154,7 @@ public class GameEngine extends JPanel implements KeyListener, Runnable {
         switch (code) {
             case KeyEvent.VK_SPACE:
                 attack = true;
+                player.attack(changementCote);
                 break;
             case KeyEvent.VK_UP:
                 player.moveUp();
@@ -174,6 +189,7 @@ public class GameEngine extends JPanel implements KeyListener, Runnable {
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             attack = false;
+            player.supprimerAttack();
         }
     }
 

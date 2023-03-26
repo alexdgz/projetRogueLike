@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class Player {
     private static Player instance = null;
-
+    private int score = 0;
     private int health = 3;
     private int vitesse = 10; // Vitesse de déplacement
 
@@ -12,10 +12,11 @@ public class Player {
 
     private Image personnageLeft, personnageRight, personnageAttackLeft, personnageAttackRight;
 
-    private Rectangle rectanglePersonnage;
+    private Rectangle rectanglePersonnage,rectangleEpee;
     private Player() {
         this.xPersonnage = 100;
         this.yPersonnage = 100;
+        this.rectangleEpee = new Rectangle(1000,1000, 50, 50);
 
         try {
             personnageLeft = ImageIO.read(getClass().getResourceAsStream("knight1.png"));
@@ -113,13 +114,31 @@ public class Player {
     }
 
 
-    public void attack(Boolean changeDirection, Graphics g ){
+    public void attack(Boolean changeDirection){
         if(changeDirection){
-            g.drawImage(personnageAttackRight, xPersonnage, yPersonnage, null);
+            rectangleEpee.setLocation(xPersonnage - 55, yPersonnage + 33);
+
         }else{
-            g.drawImage(personnageAttackLeft, xPersonnage, yPersonnage, null);
+            rectangleEpee.setLocation(xPersonnage +55, yPersonnage + 33);
+
         }
     }
+    public void supprimerAttack(){
+        rectangleEpee.setLocation(1000,1000);
+    }
 
+    public Rectangle getRectangleEpee() {
+        return rectangleEpee;
+    }
+    public void setRectangleEpee(Rectangle rectangleEpee) {
+        this.rectangleEpee = rectangleEpee;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+    public int getScore() {
+        return score;
+    }
 
 }
