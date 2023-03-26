@@ -23,10 +23,28 @@ public class Slime extends Enemy {
         this.hitbox = new Rectangle(0, 0, sprite.getWidth(null), sprite.getHeight(null));
     }
 
+    public int attack() {
+        return damage;
+    }
     public Image getSprite() {
         return sprite;
     }
-    public int attack() {
-        return damage;
+    public Rectangle getHitbox() {
+        return hitbox;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+    public int getPoints() {
+        return points;
     }
 }
