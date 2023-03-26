@@ -6,5 +6,6 @@ public abstract class Enemy {
     private int points;
     private int damage;
     private Rectangle hitbox;
-    public abstract void attack();
+    private Image sprite;
+    public abstract int attack();
 }
