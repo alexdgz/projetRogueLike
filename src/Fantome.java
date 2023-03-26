@@ -22,7 +22,8 @@ public class Fantome extends Enemy {
             throw new RuntimeException(e);
         }
     }
-    public void attack() {
+    public int attack() {
         // Attaque du fantome
+        return damage;
     }
 }

@@ -22,7 +22,7 @@ public class Slime extends Enemy {
             throw new RuntimeException(e);
         }
     }
-    public void attack() {
-        // Attaque du slime
+    public int attack() {
+        return damage;
     }
 }
