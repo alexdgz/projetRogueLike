@@ -9,6 +9,7 @@ public class Fantome extends Enemy {
     private int damage;
     private Rectangle hitbox;
     private Image sprite;
+    private int xEnemy, yEnemy;
 
     public Fantome() {
         this.health = 1;

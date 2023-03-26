@@ -8,6 +8,8 @@ public abstract class Enemy {
     private Rectangle hitbox;
     private Image sprite;
 
+    private int xEnemy, yEnemy;
+
     public abstract Image getSprite();
     public abstract int attack();
     public abstract Rectangle getHitbox();

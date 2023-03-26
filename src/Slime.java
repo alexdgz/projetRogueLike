@@ -9,6 +9,7 @@ public class Slime extends Enemy {
     private int damage;
     private Rectangle hitbox;
     private Image sprite;
+    private int xEnemy, yEnemy;
 
     public Slime() { // Constructeur de la classe Slime
         this.health = 2;

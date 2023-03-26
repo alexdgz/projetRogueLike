@@ -19,6 +19,8 @@ public class GameEngine extends JPanel implements KeyListener, Runnable {
 
     private Graphics graphics;
 
+
+    private Enemy slime_1 ;
     private GameEngine() {
         player = Player.getInstance();
         JFrame fenetre = new JFrame();
@@ -29,8 +31,8 @@ public class GameEngine extends JPanel implements KeyListener, Runnable {
         fenetre.setVisible(true);
 
 
-        xEnnemi = 500;
-        yEnnemi = 200;
+        slime_1 = EnemyFactory.createEnemy("slime");
+        slime_1.getHitbox().setLocation(100, 100);
 
         try {
             fond = ImageIO.read(getClass().getResourceAsStream("fond.png"));
