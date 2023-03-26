@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0102f6f-3640-44d0-ba74-140f2c8d214b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Enemy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/EnemyFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Fantome.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Slime.java" afterDir="false" />
+    <list default="true" id="f0102f6f-3640-44d0-ba74-140f2c8d214b" name="Changes" comment="debut ajout EnemyFactory">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Fantome.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fantome.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Slime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Slime.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +43,9 @@
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
@@ -56,7 +58,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1679826318258</updated>
-      <workItem from="1679829912590" duration="805000" />
+      <workItem from="1679829912590" duration="2059000" />
     </task>
     <task id="LOCAL-00001" summary=" Images">
       <created>1679826664221</created>
@@ -65,10 +67,21 @@
       <option name="project" value="LOCAL" />
       <updated>1679826664221</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="debut ajout EnemyFactory">
+      <created>1679830802839</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1679830802839</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="debut ajout EnemyFactory" />
+    <option name="LAST_COMMIT_MESSAGE" value="debut ajout EnemyFactory" />
   </component>
 </project>
