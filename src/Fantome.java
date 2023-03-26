@@ -9,4 +9,5 @@ public class Fantome extends Enemy {
     public void attack() {
         // Attaque du fantome
     }
+
 }

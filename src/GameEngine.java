@@ -8,41 +8,48 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 public class GameEngine extends JPanel implements KeyListener, Runnable {
     private static GameEngine instance = null;
-    private int x = 0; // Position initiale sur l'axe X
-    private int y = 0; // Position initiale sur l'axe Y
-    private int vitesse = 10; // Vitesse de déplacement
+    private Image vie1, vie2, vie3, game_over, fond;
     private double vitesseGhost = 1;
-    private Image personnageLeft;
-    private Image personnageRight;
-    private Image fond;
     private Image imageEnnemi;
     private Boolean changementCote = false;
-    private Rectangle rectanglePersonnage, rectangleEnnemi;
-    private int xPersonnage, yPersonnage, xEnnemi, yEnnemi;
+    private Boolean attack = false;
+    private Rectangle rectangleEnnemi, rectangleFenetreGauche, rectangleFenetreDroite, rectangleFenetreHaut, rectangleFenetreBas;
+    private int xEnnemi, yEnnemi;
+    private Player player;
+
+    private Graphics graphics;
 
     private GameEngine() {
+        player = Player.getInstance();
         JFrame fenetre = new JFrame();
         fenetre.addKeyListener(this);
         fenetre.add(this);
-        fenetre.setSize(715, 650);
+        fenetre.setSize(715, 605);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fenetre.setVisible(true);
-        xPersonnage = 100;
-        yPersonnage = 100;
-        xEnnemi = 200;
+
+
+        xEnnemi = 1000000000;
         yEnnemi = 200;
 
-        // Charge l'image du personnage depuis un fichier local
         try {
-            personnageLeft = ImageIO.read(getClass().getResourceAsStream("knight1.png"));
-            personnageRight = ImageIO.read(getClass().getResourceAsStream("knight2.png"));
             fond = ImageIO.read(getClass().getResourceAsStream("fond.png"));
             imageEnnemi = ImageIO.read(getClass().getResourceAsStream("ghost.png"));
+            vie1 = ImageIO.read(getClass().getResourceAsStream("coeur1.png"));
+            vie2 = ImageIO.read(getClass().getResourceAsStream("coeur2.png"));
+            vie3 = ImageIO.read(getClass().getResourceAsStream("coeur3.png"));
+            game_over = ImageIO.read(getClass().getResourceAsStream("game_over.png"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        rectanglePersonnage = new Rectangle(xPersonnage, yPersonnage, personnageLeft.getWidth(null), personnageLeft.getHeight(null));
+        rectangleFenetreGauche = new Rectangle(0, 0, 1, 605);
+        rectangleFenetreDroite = new Rectangle(714, 0, 1, 605);
+        rectangleFenetreHaut = new Rectangle(0, 0, 715, 1);
+        rectangleFenetreBas = new Rectangle(0, 575, 715, 1);
         rectangleEnnemi = new Rectangle(xEnnemi, yEnnemi, imageEnnemi.getWidth(null), imageEnnemi.getHeight(null));
+
+
 
         Thread t = new Thread(this);
         t.start();
@@ -57,38 +64,72 @@ public class GameEngine extends JPanel implements KeyListener, Runnable {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(fond, 0, 0, this);
-        if (changementCote == true) {
-            g.drawImage(personnageRight, xPersonnage, yPersonnage, null); // Dessine l'image du personnage à la position (x, y)
-        } else {
-            g.drawImage(personnageLeft, xPersonnage, yPersonnage, null); // Dessine l'image du personnage à la position (x, y)
+        if (player.getHealth() >0 ){
+            g.drawImage(fond, 0, 0, this);
+            if (changementCote == true) {
+                if (attack == true){
+                    g.drawImage(player.getPersonnageAttackRight(), player.getxPersonnage(), player.getyPersonnage(), null); // Dessine l'image du personnage à la position (x, y)
+                }else {
+                    g.drawImage(player.getPersonnageRight(), player.getxPersonnage(), player.getyPersonnage(), null); // Dessine l'image du personnage à la position (x, y)
+
+                }
+            } else {
+                if (attack == true) {
+                    g.drawImage(player.getPersonnageAttackLeft(), player.getxPersonnage(), player.getyPersonnage(), null); // Dessine l'image du personnage à la position (x, y)
+                }else {
+                    g.drawImage(player.getPersonnageLeft(), player.getxPersonnage(), player.getyPersonnage(), null); // Dessine l'image du personnage à la position (x, y)
+                }
+            }
+
+            g.drawImage(imageEnnemi, xEnnemi, yEnnemi, null); // Dessine l'image de l'ennemi à la position (xEnnemi, yEnnemi)
+
+
+            if (player.getHealth() == 3) {
+                g.drawImage(vie3, 0, 0, null);
+            } else if (player.getHealth() == 2) {
+                g.drawImage(vie2, 0, 0, null);
+            } else if (player.getHealth() == 1) {
+                g.drawImage(vie1, 0, 0, null);
+            }
+
+
+        }else {
+            g.drawImage(game_over, 0, 0, null);
         }
-        g.drawImage(imageEnnemi, xEnnemi, yEnnemi, null); // Dessine l'image de l'ennemi à la position (xEnnemi, yEnnemi)
+
 
     }
 
     public void detecterCollision() {
-        if (rectanglePersonnage.intersects(rectangleEnnemi)) {
-            int dx = xPersonnage - xEnnemi;
-            int dy = yPersonnage - yEnnemi;
-
+        if (player.getRectanglePersonnage().intersects(rectangleEnnemi)) {
+            int dx = player.getxPersonnage() - xEnnemi;
+            int dy = player.getyPersonnage() - yEnnemi;
+            player.setHealth(player.getHealth() - 1);
             if (Math.abs(dx) > Math.abs(dy)) {
                 if (dx > 0) {
-                    System.out.println("Collision côté gauche !");
                     xEnnemi -= 50;
                 } else {
-                    System.out.println("Collision côté droit !");
                     xEnnemi += 50;
                 }
             } else {
                 if (dy > 0) {
-                    System.out.println("Collision côté haut !");
                     yEnnemi -= 50;
                 } else {
-                    System.out.println("Collision côté bas !");
                     yEnnemi += 50;
                 }
             }
+        }
+        if (player.getRectanglePersonnage().intersects(rectangleFenetreGauche)) {
+            player.setxPersonnage(player.getxPersonnage() + 20);
+        }
+        if (player.getRectanglePersonnage().intersects(rectangleFenetreDroite)) {
+            player.setxPersonnage(player.getxPersonnage() - 20);
+        }
+        if (player.getRectanglePersonnage().intersects(rectangleFenetreHaut)) {
+            player.setyPersonnage(player.getyPersonnage() + 20);
+        }
+        if (player.getRectanglePersonnage().intersects(rectangleFenetreBas)) {
+            player.setyPersonnage(player.getyPersonnage() - 20);
         }
 
     }
@@ -97,26 +138,28 @@ public class GameEngine extends JPanel implements KeyListener, Runnable {
         // Déplace le personnage en fonction de la touche de clavier pressée
         int code = e.getKeyCode();
         switch (code) {
+            case KeyEvent.VK_SPACE:
+                attack = true;
+                break;
             case KeyEvent.VK_UP:
-                yPersonnage -= vitesse;
-                rectanglePersonnage.y -= vitesse;
+                player.moveUp();
                 break;
             case KeyEvent.VK_DOWN:
-                yPersonnage += vitesse;
-                rectanglePersonnage.y += vitesse;
+                player.moveDown();
                 break;
             case KeyEvent.VK_LEFT:
-                xPersonnage -= vitesse;
-                rectanglePersonnage.x -= vitesse;
+                changementCote = true;
+                player.moveLeft();
                 break;
             case KeyEvent.VK_RIGHT:
-                xPersonnage += vitesse;
-                rectanglePersonnage.x += vitesse;
+                changementCote = false;
+                player.moveRight();
                 break;
+
         }
 
-        // Met à jour le rectangle pour le personnage
-        rectanglePersonnage.setBounds(xPersonnage, yPersonnage, personnageLeft.getWidth(null), personnageLeft.getHeight(null));
+
+        //rectanglePersonnage.setBounds(xPersonnage, yPersonnage, personnageLeft.getWidth(null), personnageLeft.getHeight(null));
 
         // Détecte les collisions entre le personnage et l'ennemi
         detecterCollision();
@@ -129,26 +172,30 @@ public class GameEngine extends JPanel implements KeyListener, Runnable {
     }
 
     public void keyReleased(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            attack = false;
+        }
     }
 
     @Override
     public void run() {
         while (true) {
             // Déplace l'ennemi en direction du personnage
-            if (xEnnemi < xPersonnage) {
+            if (xEnnemi < player.getxPersonnage()) {
                 xEnnemi += vitesseGhost;
             } else {
                 xEnnemi -= vitesseGhost;
             }
 
-            if (yEnnemi < yPersonnage) {
+            if (yEnnemi < player.getyPersonnage()) {
                 yEnnemi += vitesseGhost;
             } else {
                 yEnnemi -= vitesseGhost;
             }
 
+
             // Met à jour les rectangles pour le personnage et l'ennemi
-            rectanglePersonnage.setBounds(xPersonnage, yPersonnage, personnageLeft.getWidth(null), personnageLeft.getHeight(null));
+            player.getRectanglePersonnage().setBounds(player.getxPersonnage(), player.getyPersonnage(), player.getPersonnageLeft().getWidth(null), player.getPersonnageLeft().getHeight(null));
             rectangleEnnemi.setBounds(xEnnemi, yEnnemi, imageEnnemi.getWidth(null), imageEnnemi.getHeight(null));
 
             // Détecte les collisions entre le personnage et l'ennemi
@@ -161,6 +208,16 @@ public class GameEngine extends JPanel implements KeyListener, Runnable {
             try {
                 Thread.sleep(16);
             } catch (InterruptedException ex) {}
+
+            if (player.getHealth() == 0) {
+                try {
+                    Thread.sleep(5000);
+                    System.exit(0);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
         }
 
     }
