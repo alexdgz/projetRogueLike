@@ -15,12 +15,16 @@ public class Slime extends Enemy {
         this.speed = 1;
         this.points = 2;
         this.damage = 2;
-        this.hitbox = new Rectangle(0, 0, 0, 0);
         try {
             this.sprite = ImageIO.read(getClass().getResourceAsStream("slime1.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        this.hitbox = new Rectangle(0, 0, sprite.getWidth(null), sprite.getHeight(null));
+    }
+
+    public Image getSprite() {
+        return sprite;
     }
     public int attack() {
         return damage;

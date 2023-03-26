@@ -15,13 +15,17 @@ public class Fantome extends Enemy {
         this.speed = 2;
         this.points = 1;
         this.damage = 1;
-        this.hitbox = new Rectangle(0, 0, 0, 0);
         try {
             this.sprite = ImageIO.read(getClass().getResourceAsStream("ghost.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        this.hitbox = new Rectangle(0, 0, sprite.getWidth(null), sprite.getHeight(null));
     }
+    public Image getSprite() {
+        return sprite;
+    }
+
     public int attack() {
         // Attaque du fantome
         return damage;
