@@ -1,7 +1,6 @@
 import java.awt.*;
 
 public abstract class Enemy {
-    private int health;
     private int speed;
     private int points;
     private int damage;
@@ -13,9 +12,14 @@ public abstract class Enemy {
     public abstract Image getSprite();
     public abstract int attack();
     public abstract Rectangle getHitbox();
-    public abstract int getHealth();
-    public abstract void setHealth(int health);
+
     public abstract int getSpeed();
     public abstract int getPoints();
+
+    public abstract int getXEnemy();
+    public abstract int getYEnemy();
+
+    public abstract void setXEnemy(int xEnemy);
+    public abstract void setYEnemy(int yEnemy);
 
 }
