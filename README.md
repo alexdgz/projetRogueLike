@@ -16,7 +16,9 @@ Nous utilisons ce pattern pour permettre à la classe ScoreBoard (qui s'occupe d
 Le pattern Factory est utilisé pour créer des objets sans avoir à spécifier la classe exacte de l'objet que l'on souhaite créer.
 Nous utilisons ce pattern pour créer des objets de type Fantome ou de type Slime sans avoir à spécifier la classe exacte de l'objet que l'on souhaite créer.
 
+## Diagramme UML du projet
 
+<img src="./diagrammeProjetBLF.png" width="800" />
 <br>
 <br>
 <b>Ce projet a été réalisé par : Arthur Wlodarczak et Alex Degouzon </b>

@@ -2,7 +2,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 
-public class Player {
+public class
+Player {
     private static Player instance = null;
     private int score = 0;
     private int health = 3;
