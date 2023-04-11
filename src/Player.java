@@ -114,18 +114,18 @@ public class Player {
     }
 
 
-    public void attack(Boolean changeDirection){
+    public void attack(Boolean changeDirection){ // méthode permettant de créer une hitbox pour l'attaque
         if(changeDirection){
-            rectangleEpee.setLocation(xPersonnage - 55, yPersonnage + 33);
+            rectangleEpee.setLocation(xPersonnage - 55, yPersonnage + 33);  // si le personnage regarde à gauche, l'attaque se fera à gauche
 
         }else{
-            rectangleEpee.setLocation(xPersonnage +55, yPersonnage + 33);
+            rectangleEpee.setLocation(xPersonnage +55, yPersonnage + 33); // si le personnage regarde à droite, l'attaque se fera à droite
 
         }
     }
     public void supprimerAttack(){
         rectangleEpee.setLocation(1000,1000);
-    }
+    } // méthode permettant de supprimer la hitbox de l'attaque
 
     public Rectangle getRectangleEpee() {
         return rectangleEpee;
